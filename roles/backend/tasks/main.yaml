@@ -1,0 +1,3 @@
+---
+- name: 添加php的ondrej源
+  apt_repository: repo='ppa:ondrej/php' update_cache=yes
