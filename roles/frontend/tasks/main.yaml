@@ -32,32 +32,32 @@
 
 - stat:
     path: /etc/nginx/nginx.conf
-  register: nginx.conf
+  register: nginx
 - name: backup oldnginxconfig
   shell: >
      mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-  when: nginx.conf.stat['exists']
+  when: nginx.stat['exists']
 - stat:
     path: /etc/php/7.2/fpm/pool.d/www.conf
-  register: www.conf
+  register: www
 - name: backup oldphpconfig
   shell: >
      mv /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/www.conf.bak
-  when: www.conf.stat['exists']
+  when: www.stat['exists']
 - stat:
     path: /etc/php/7.2/fpm/php-fpm.conf
-  register: php-fpm.conf
+  register: php-fpm
 - name: backup oldphpfpmconfig
   shell: >
      mv /etc/php/7.2/fpm/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf.bak
-  when: php-fpm.conf.stat['exists']
+  when: php-fpm.stat['exists']
 - stat:
     path: /etc/redis/redis.conf
-  register: redis.conf
+  register: redis
 - name: backup oldredis
   shell: >
      mv /etc/redis/redis.conf /etc/redis/redis.conf.bak
-  when: redis.conf.stat['exists']
+  when: redis.stat['exists']
 - stat:
     path: /etc/postfix
   register: postfix
