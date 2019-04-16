@@ -36,35 +36,35 @@
 - name: backup oldnginxconfig
   shell: >
      mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-  when: nginx.conf.stat['stat['stat['exists']']']
+  when: nginx.conf.stat['exists']
 - stat:
     path: /etc/php/7.2/fpm/pool.d/www.conf
   register: www.conf
 - name: backup oldphpconfig
   shell: >
      mv /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/www.conf.bak
-  when: www.conf.stat['stat['stat['exists']']']
+  when: www.conf.stat['exists']
 - stat:
     path: /etc/php/7.2/fpm/php-fpm.conf
   register: php-fpm.conf
 - name: backup oldphpfpmconfig
   shell: >
      mv /etc/php/7.2/fpm/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf.bak
-  when: php-fpm.conf.stat['stat['stat['exists']']']
+  when: php-fpm.conf.stat['exists']
 - stat:
     path: /etc/redis/redis.conf
   register: redis.conf
 - name: backup oldredis
   shell: >
      mv /etc/redis/redis.conf /etc/redis/redis.conf.bak
-  when: redis.conf.stat['stat['stat['exists']']']
+  when: redis.conf.stat['exists']
 - stat:
     path: /etc/postfix
   register: postfix
 - name: backup oldpostfix
   shell: >
      mv /etc/postfix /etc/postfix.bak
-  when: postfix.stat['stat['stat['exists']']']
+  when: postfix.stat['exists']
 - name: create logs dir
   file:
     path: "{{ logs_path }}"
