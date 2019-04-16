@@ -1,2 +1,17 @@
 TimeZone: 'America/Los_Angeles'
 PHP_VERSION: '7.1'
+logs_path: /home/crazysal/logs
+core_path: /home/crazysal
+user: crazysal
+group: crazysal
+gitfrontrepo: gitfronturl
+gitbackrepo: gitbackurl
+logs_nginx_path: /home/crazysal/logs/nginx
+logs_php_path: /home/crazysal/logs/php
+nginx_log_format: |-
+  '$http_x_forwarded_for $remote_addr - $remote_user [$time_local]'
+  '[$host]'
+  '"$request_method $scheme://$host$request_uri $server_protocol" $status $body_bytes_sent'
+  '"$http_referer" "$http_user_agent" "$upstream_cache_status"'
+  ' "$request_time $upstream_response_time $upstream_addr"'
+  ' "$http_cdn_src_ip" "$http_true_client_ip" ';

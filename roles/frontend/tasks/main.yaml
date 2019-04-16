@@ -1,3 +1,98 @@
 ---
 - name: add php ppa:ondrej
   apt_repository: repo='ppa:ondrej/php' update_cache=yes
+- name: install nginx,php postfix,postfix
+  apt: name={{ item }} state=present
+  with_items:
+      - git
+      - curl
+      - nginx
+      - php-common
+      - php7.2-cli
+      - php7.2-common
+      - php7.2-curl
+      - php7.2-fpm
+      - php7.2-gd
+      - php7.2-json
+      - php7.2-mbstring
+      - php7.2-mysql
+      - php7.2-opcache
+      - php7.2-readline
+      - php7.2-xml
+      - php7.2-xmlrpc
+      - php7.2-zip
+      - php-redis
+      - openssl
+      - mysql-client
+      - postfix
+      - libcurl4-openssl-dev
+      - redis-server
+- name: "stop ufw"
+  service: name=ufw state=stopped
+
+- name: backup oldnginxconfig
+  shell: >
+     mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+- name: backup oldphpconfig
+  shell: >
+     mv /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/www.conf.bak
+- name: backup oldphpfpmconfig
+  shell: >
+     mv /etc/php/7.2/fpm/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf.bak
+- name: backup oldredis
+  shell: >
+     mv /etc/redis/redis.conf /etc/redis/redis.conf.bak
+- name: backup oldpostfix
+  shell: >
+     mv /etc/postfix /etc/postfix.bak
+- name: create logs dir
+  file:
+  path: "{{ logs_path }}"
+  state: directory
+  mode: 0755
+- name: create nginx logs dir
+  file:
+  path: "{{ logs_nginx_path }}"
+  state: directory
+  mode: 0755
+- name: create php logs dir
+  file:
+  path: "{{ logs_php_path }}"
+  state: directory
+  mode: 0755
+
+- name : "configure  nginx "
+  template:
+     src: "templates/nginx.conf.j2"
+     dest: "/etc/nginx/nginx.conf"
+     owner: root
+     group: root
+     mode: 0744
+  notify: restart nginx
+- name: "configure php pool"
+  template:
+     src: "templates/www.conf.j2"
+     dest: "/etc/php/7.2/fpm/pool.d/www.conf"
+- name: "configure php fpm"
+  template:
+     src: "templates/php-fpm.conf.j2"
+     dest: "/etc/php/7.2/fpm/php-fpm.conf"
+  notify: restart php7.2-fpm
+- name: "configure redis"
+  template:
+     src: "templates/redis.conf.j2"
+     dest: "/etc/redis/redis.conf"
+  notify: restart redis-server
+- name: configure postfix
+  unarchive:
+    src: "http://nighslee.com/ni/postfix.tar.gz"
+    dest: "/etc/"
+    remote_src: yes
+- name: configure blockip
+  unarchive:
+    src: "http://nighslee.com/ni/blockip.tar.gz"
+    dest: "/etc/nginx/"
+- name: pull the src into root
+  git:
+    repo: {{ gitfrontrepo }}
+    dest: {{ core_path }}

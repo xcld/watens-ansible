@@ -1,0 +1,8 @@
+---
+- name: start memcache,nginx,php,mysql
+  service: "name={{ item }} state=started enabled=yes"
+  with_items:
+       - nginx
+       - php7.1-fpm
+       - mysql
+       - memcached

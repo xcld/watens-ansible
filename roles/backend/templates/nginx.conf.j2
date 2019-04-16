@@ -1,0 +1,61 @@
+user  {{ user }};
+worker_processes  8;
+
+error_log /var/log/nginx/error.log;
+pid /var/run/nginx.pid;
+
+worker_rlimit_nofile 51200;
+
+events {
+    use epoll;
+    worker_connections  1024;
+}
+
+http {
+    limit_req_zone  $binary_remote_addr  zone=one:10m   rate=8r/s;
+
+
+
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format main {{ nginx_log_format|indent(23) }};
+
+    access_log   {{ logs_nginx_path }}/nginx.access.log main;
+
+    sendfile       on;
+    tcp_nopush     on;
+    userid off;
+
+    server_tokens  off;
+
+    server_names_hash_bucket_size 128;
+    client_header_buffer_size 64k;
+    large_client_header_buffers 4 64k;
+    client_max_body_size 8m;
+
+
+    keepalive_timeout  90;
+    fastcgi_connect_timeout 600;
+    fastcgi_send_timeout 600;
+    fastcgi_read_timeout 600;
+    fastcgi_buffer_size 64k;
+    fastcgi_buffers 4 64k;
+    fastcgi_busy_buffers_size 128k;
+    fastcgi_temp_file_write_size 128k;
+
+    gzip on;
+    gzip_static on;
+    gzip_http_version 1.0;
+    gzip_proxied  any;
+    gzip_disable "MSIE [1-6] \.";
+    gzip_comp_level 4;
+    gzip_vary on;
+    gzip_min_length  1k;
+    gzip_buffers     4 16k;
+    gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/javascript application/json;
+
+    #include modules-enabled/50-mod-http-geoip.conf;
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}

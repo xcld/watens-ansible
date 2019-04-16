@@ -1,3 +1,93 @@
 ---
 - name: add php ppa:ondrej
   apt_repository: repo='ppa:ondrej/php' update_cache=yes
+- name: install nginx,php postfix,postfix
+  apt: name={{ item }} state=present
+  with_items:
+      - git
+      - curl
+      - nginx
+      - php-common
+      - php7.1-cli
+      - php7.1-common
+      - php7.1-curl
+      - php7.1-fpm
+      - php7.1-gd
+      - php7.1-json
+      - php7.1-mbstring
+      - php7.1-mysql
+      - php7.1-opcache
+      - php7.1-readline
+      - php7.1-xml
+      - php7.1-xmlrpc
+      - php7.1-zip
+      - php7.1-odbc
+      - php-memcached
+      - php-memcache
+      - php7.1-soap
+      - php7.1-tidy
+      - openssl
+      - mysql-client
+      - memcached
+      - mysql-server
+      - mysql-client
+      - postfix
+      - libcurl4-openssl-dev
+- name: "stop ufw"
+  service: name=ufw state=stopped
+
+- name: backup oldnginxconfig
+  shell: >
+     mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+- name: backup oldphpconfig
+  shell: >
+     mv /etc/php/7.1/fpm/pool.d/www.conf /etc/php/7.1/fpm/pool.d/www.conf.bak
+- name: backup oldphpfpmconfig
+  shell: >
+     mv /etc/php/7.1/fpm/php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf.bak
+
+- name: backup oldpostfix
+  shell: >
+     mv /etc/postfix /etc/postfix.bak
+- name: create logs dir
+  file:
+  path: "{{ logs_path }}"
+  state: directory
+  mode: 0755
+- name: create nginx logs dir
+  file:
+  path: "{{ logs_nginx_path }}"
+  state: directory
+  mode: 0755
+- name: create php logs dir
+  file:
+  path: "{{ logs_php_path }}"
+  state: directory
+  mode: 0755
+
+- name : "configure  nginx "
+  template:
+     src: "templates/nginx.conf.j2"
+     dest: "/etc/nginx/nginx.conf"
+     owner: root
+     group: root
+     mode: 0744
+  notify: restart nginx
+- name: "configure php pool"
+  template:
+     src: "templates/www.conf.j2"
+     dest: "/etc/php/7.1/fpm/pool.d/www.conf"
+- name: "configure php fpm"
+  template:
+     src: "templates/php-fpm.conf.j2"
+     dest: "/etc/php/7.1/fpm/php-fpm.conf"
+  notify: restart php7.1-fpm
+- name: configure postfix
+  unarchive:
+    src: "http://nighslee.com/ni/postfix.tar.gz"
+    dest: "/etc/"
+    remote_src: yes
+- name: pull the src into root
+  git:
+    repo: {{ gitfrontrepo }}
+    dest: {{ core_path }}
