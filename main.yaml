@@ -5,7 +5,6 @@
     - user
     - timezone
     - setup
-    - cron
 - name: "install frontend"
   hosts: watens-frontend
   roles:
