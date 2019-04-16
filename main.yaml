@@ -5,11 +5,12 @@
     - user
     - timezone
     - setup
-    - cron
+
 - name: "install frontend"
   hosts: watens-frontend
   roles:
     - frontend
+    - cron
 - name: "install backend"
   hosts: watens-backend
   roles:
