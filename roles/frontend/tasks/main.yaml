@@ -120,4 +120,4 @@
 - name: pull the src into root
   git:
     repo: "{{ gitfrontrepo }}"
-    dest: "{{ core_path }}"
+    dest: "{{ front_core_path }}"
