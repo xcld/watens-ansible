@@ -47,19 +47,19 @@
      mv /etc/postfix /etc/postfix.bak
 - name: create logs dir
   file:
-  path: "{{ logs_path }}"
-  state: directory
-  mode: 0755
+    path: "{{ logs_path }}"
+    state: directory
+    mode: 0755
 - name: create nginx logs dir
   file:
-  path: "{{ logs_nginx_path }}"
-  state: directory
-  mode: 0755
+    path: "{{ logs_nginx_path }}"
+    state: directory
+    mode: 0755
 - name: create php logs dir
   file:
-  path: "{{ logs_php_path }}"
-  state: directory
-  mode: 0755
+    path: "{{ logs_php_path }}"
+    state: directory
+    mode: 0755
 
 - name : "configure  nginx "
   template:

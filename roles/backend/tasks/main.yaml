@@ -53,17 +53,17 @@
   file:
     path: "{{ logs_path }}"
     state: directory
-  mode: 0755
+    mode: 0755
 - name: create nginx logs dir
   file:
     path: "{{ logs_nginx_path }}"
     state: directory
-  mode: 0755
+    mode: 0755
 - name: create php logs dir
   file:
     path: "{{ logs_php_path }}"
     state: directory
-  mode: 0755
+    mode: 0755
 
 - name : "configure  nginx "
   template:
