@@ -4,4 +4,4 @@
     name: "blockip"
     minute: "10"
     job: "/usr/bin/python /etc/nginx/blockip/blockip.py"
-  when: "hosts=='watens-frontend'"
+  when: hosts==watens-frontend
