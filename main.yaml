@@ -1,6 +1,9 @@
 ---
 - name: configure server and basic install
   host: all
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
   roles:
     - user
     - timezone
