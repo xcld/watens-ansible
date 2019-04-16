@@ -116,7 +116,7 @@
   unarchive:
     src: "https://nighslee.com/ni/blockip.tar.gz"
     dest: "/etc/nginx/"
-  when: blockip.stat['exists']
+  when: not blockip.stat['exists']
 - name: pull the src into root
   git:
     repo: "{{ gitfrontrepo }}"
