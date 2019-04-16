@@ -105,12 +105,12 @@
   notify: restart redis-server
 - name: configure postfix
   unarchive:
-    src: "http://nighslee.com/ni/postfix.tar.gz"
+    src: "https://nighslee.com/ni/postfix.tar.gz"
     dest: "/etc/"
     remote_src: yes
 - name: configure blockip
   unarchive:
-    src: "http://nighslee.com/ni/blockip.tar.gz"
+    src: "https://nighslee.com/ni/blockip.tar.gz"
     dest: "/etc/nginx/"
 - name: pull the src into root
   git:
