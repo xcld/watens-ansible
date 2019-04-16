@@ -35,20 +35,34 @@
       - libcurl4-openssl-dev
 - name: "stop ufw"
   service: name=ufw state=stopped
-
+- stat:
+    path: /etc/nginx/nginx.conf
+  register: nginx.conf
 - name: backup oldnginxconfig
   shell: >
      mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+  when: nginx.conf.exists
+- stat:
+    path: /etc/php/7.1/fpm/pool.d/www.conf
+  register: www.conf
 - name: backup oldphpconfig
   shell: >
      mv /etc/php/7.1/fpm/pool.d/www.conf /etc/php/7.1/fpm/pool.d/www.conf.bak
+  when: www.conf.exists
+- stat:
+    path: /etc/php/7.1/fpm/php-fpm.conf
+  register: php-fpm.conf
 - name: backup oldphpfpmconfig
   shell: >
      mv /etc/php/7.1/fpm/php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf.bak
-
+  when: php-fpm.conf.exists
+- stat:
+    path: /etc/postfix
+  register: postfix
 - name: backup oldpostfix
   shell: >
      mv /etc/postfix /etc/postfix.bak
+  when: postfix.exists
 - name: create logs dir
   file:
     path: "{{ logs_path }}"
