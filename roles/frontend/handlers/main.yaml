@@ -1,13 +1,7 @@
 ---
-- name: start redis,nginx,php
-  service: name="{{ item }}" state=started enabled=yes
-  with_items:
-       - nginx
-       - php7.2-fpm
-       - redis-server
-- name: start redis,nginx,php
-  service: name="{{ item }}" state=restarted enabled=yes
-  with_items:
-       - nginx
-       - php7.2-fpm
-       - redis-server
+- name: restart nginx
+  service: name=nginx state=restarted enabled=yes
+- name: restart php7.2-fpm
+  service: name=php7.2-fpm state=restarted enabled=yes
+- name: restart redis-server
+  service: name=redis-server state=restarted enabled=yes
