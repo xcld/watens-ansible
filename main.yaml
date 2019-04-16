@@ -1,16 +1,16 @@
 ---
 - name: "configure server and basic install"
-  host: all
+  hosts: all
   roles:
     - user
     - timezone
     - setup
     - cron
 - name: "install frontend"
-  host: watens-frontend
+  hosts: watens-frontend
   roles:
     - frontend
 - name: "install backend"
-  host: watens-backend
+  hosts: watens-backend
   roles:
     - backend
