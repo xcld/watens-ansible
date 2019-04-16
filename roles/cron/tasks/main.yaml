@@ -4,4 +4,4 @@
     name: "blockip"
     minute: "10"
     job: "/usr/bin/python /etc/nginx/blockip/blockip.py"
-  when: groups['watens-frontend']
+  when: groups['watens']['watens-frontend']
