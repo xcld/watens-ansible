@@ -5,3 +5,9 @@
        - nginx
        - php7.2-fpm
        - redis-server
+- name: start redis,nginx,php
+  service: "name={{ item }} state=restarted enabled=yes"
+  with_items:
+       - nginx
+       - php7.2-fpm
+       - redis-server
