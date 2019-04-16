@@ -51,18 +51,18 @@
   when: www | failed
 - stat:
     path: /etc/php/7.1/fpm/php-fpm.conf
-  register: php-fpm.conf
+  register: php-fpm
 - name: backup oldphpfpmconfig
   shell: >
      mv /etc/php/7.1/fpm/php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf.bak
-  when: php-fpm.conf.exists
+  when: php-fpm | failed
 - stat:
     path: /etc/postfix
   register: postfix
 - name: backup oldpostfix
   shell: >
      mv /etc/postfix /etc/postfix.bak
-  when: postfix.exists
+  when: postfix | failed
 - name: create logs dir
   file:
     path: "{{ logs_path }}"
