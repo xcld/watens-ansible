@@ -46,11 +46,11 @@
   when: www.stat['exists']
 - stat:
     path: /etc/php/7.2/fpm/php-fpm.conf
-  register: php-fpm
+  register: phpfpm
 - name: backup oldphpfpmconfig
   shell: >
      mv /etc/php/7.2/fpm/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf.bak
-  when: php-fpm.stat['exists']
+  when: phpfpm.stat['exists']
 - stat:
     path: /etc/redis/redis.conf
   register: redis
