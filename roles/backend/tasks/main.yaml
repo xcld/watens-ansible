@@ -37,11 +37,11 @@
   service: name=ufw state=stopped
 - stat:
     path: /etc/nginx/nginx.conf
-  register: nginx.conf
+  register: nginx
 - name: backup oldnginxconfig
   shell: >
      mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-  when: nginx.conf.exists
+  when: nginx | failed
 - stat:
     path: /etc/php/7.1/fpm/pool.d/www.conf
   register: www.conf
