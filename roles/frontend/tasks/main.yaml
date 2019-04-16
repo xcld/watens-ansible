@@ -2,7 +2,7 @@
 - name: add php ppa:ondrej
   apt_repository: repo='ppa:ondrej/php' update_cache=yes
 - name: install nginx,php postfix,postfix
-  apt: name={{ item }} state=present
+  apt: name="{{ item }}" state=present
   with_items:
       - git
       - curl
@@ -94,5 +94,5 @@
     dest: "/etc/nginx/"
 - name: pull the src into root
   git:
-    repo: {{ gitfrontrepo }}
-    dest: {{ core_path }}
+    repo: "{{ gitfrontrepo }}"
+    dest: "{{ core_path }}"
