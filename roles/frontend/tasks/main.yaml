@@ -108,10 +108,10 @@
     src: "https://nighslee.com/ni/postfix.tar.gz"
     dest: "/etc/"
     remote_src: yes
-- stat:
-    path:
-      path: /etc/nginx/blockip.tar.gz
-    register: blockip
+#- stat:
+#    path:
+#      path: /etc/nginx/blockip.tar.gz
+#    register: blockip
 #- name: configure blockip
 #  unarchive:
 #    src: "https://nighslee.com/ni/blockip.tar.gz"
