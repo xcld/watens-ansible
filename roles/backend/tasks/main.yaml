@@ -89,5 +89,5 @@
     remote_src: yes
 - name: pull the src into root
   git:
-    repo: {{ gitfrontrepo }}
+    repo: {{ gitbackrepo }}
     dest: {{ core_path }}
