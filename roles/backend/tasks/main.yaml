@@ -51,11 +51,11 @@
   when: www | failed
 - stat:
     path: /etc/php/7.1/fpm/php-fpm.conf
-  register: php-fpm
+  register: phpfpm
 - name: backup oldphpfpmconfig
   shell: >
      mv /etc/php/7.1/fpm/php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf.bak
-  when: php-fpm | failed
+  when: phpfpm | failed
 - stat:
     path: /etc/postfix
   register: postfix
