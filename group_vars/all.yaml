@@ -4,6 +4,7 @@ logs_path: /home/crazysal/logs
 core_path: /home/crazysal
 user: crazysal
 group: crazysal
+user_enable_passwordless_sudo: True
 gitfrontrepo: gitfronturl
 gitbackrepo: gitbackurl
 logs_nginx_path: /home/crazysal/logs/nginx
