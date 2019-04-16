@@ -44,11 +44,11 @@
   when: nginx | failed
 - stat:
     path: /etc/php/7.1/fpm/pool.d/www.conf
-  register: www.conf
+  register: www
 - name: backup oldphpconfig
   shell: >
      mv /etc/php/7.1/fpm/pool.d/www.conf /etc/php/7.1/fpm/pool.d/www.conf.bak
-  when: www.conf.exists
+  when: www | failed
 - stat:
     path: /etc/php/7.1/fpm/php-fpm.conf
   register: php-fpm.conf
