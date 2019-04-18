@@ -33,32 +33,32 @@
 
 - stat:
     path: /etc/nginx/nginx.conf
-  register: nginx.conf
+  register: nginx
 - name: backup oldnginxconfig
   shell: >
      mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-  when: nginx.conf.stat['exists']
+  when: nginx.stat['exists']
 - stat:
     path: /etc/php/7.2/fpm/pool.d/www.conf
-  register: www.conf
+  register: www
 - name: backup oldphpconfig
   shell: >
      mv /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/www.conf.bak
-  when: www.conf.stat['exists']
+  when: www.stat['exists']
 - stat:
     path: /etc/php/7.2/fpm/php-fpm.conf
-  register: php-fpm.conf
+  register: phpfpm
 - name: backup oldphpfpmconfig
   shell: >
      mv /etc/php/7.2/fpm/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf.bak
-  when: php-fpm.conf.stat['exists']
+  when: phpfpm.stat['exists']
 - stat:
     path: /etc/redis/redis.conf
-  register: redis.conf
+  register: redis
 - name: backup oldredis
   shell: >
      mv /etc/redis/redis.conf /etc/redis/redis.conf.bak
-  when: redis.conf.stat['exists']
+  when: redis.stat['exists']
 - stat:
     path: /etc/postfix
   register: postfix
@@ -106,14 +106,19 @@
   notify: restart redis-server
 - name: configure postfix
   unarchive:
-    src: "http://nighslee.com/ni/postfix.tar.gz"
+    src: "https://nighslee.com/ni/postfix.tar.gz"
     dest: "/etc/"
     remote_src: yes
-- name: configure blockip
-  unarchive:
-    src: "http://nighslee.com/ni/blockip.tar.gz"
-    dest: "/etc/nginx/"
+#- stat:
+#    path:
+#      path: /etc/nginx/blockip.tar.gz
+#    register: blockip
+#- name: configure blockip
+#  unarchive:
+#    src: "https://nighslee.com/ni/blockip.tar.gz"
+#    dest: "/etc/nginx/"
+#  when: not blockip.stat['exists']
 - name: pull the src into root
   git:
     repo: "{{ gitfrontrepo }}"
-    dest: "{{ core_path }}"
+    dest: "{{ front_core_path }}"
