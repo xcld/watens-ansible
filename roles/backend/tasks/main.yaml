@@ -26,6 +26,7 @@
       - php-memcache
       - php7.1-soap
       - php7.1-tidy
+      - composer
       - openssl
       - mysql-client
       - memcached

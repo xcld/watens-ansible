@@ -22,6 +22,7 @@
       - php7.2-xmlrpc
       - php7.2-zip
       - php-redis
+      - composer
       - openssl
       - mysql-client
       - postfix
