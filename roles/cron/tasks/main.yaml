@@ -2,6 +2,6 @@
 - name: add cronjob to frontend
   cron:
     name: "blockip"
-    minute: "10"
+    minute: "*/10"
     job: "/usr/bin/python /etc/nginx/blockip/blockip.py"
-  when: groups['watens']['watens-frontend']
+  when: ansible_hostname=="watens-frontend"
